@@ -1,17 +1,37 @@
-﻿
+﻿using Iyzipay.Request;
 using IyzipayApi.Models;
-using IyzipayApi.Models.Enums;
+using IyzipayApi.Models.CredentialsModels;
+using IyzipayApi.Models.Request;
+using IyzipayApi.Models.Resource;
+using Address = IyzipayApi.Models.Address;
+using BasketItem = IyzipayApi.Models.BasketItem;
+using BasketItemType = IyzipayApi.Models.Enums.BasketItemType;
+using Buyer = IyzipayApi.Models.Buyer;
+using Currency = IyzipayApi.Models.Currency;
+using Locale = IyzipayApi.Models.Locale;
+using PaymentChannel = IyzipayApi.Models.Enums.PaymentChannel;
+using PaymentGroup = IyzipayApi.Models.Enums.PaymentGroup;
 
 namespace IyzipayApi.Services;
 
 public class CreatePaymentService
 {
+    private readonly IConfiguration configuration;
+
+    public CreatePaymentService(IConfiguration configuration)
+    {
+        this.configuration = configuration;
+    }
+
     public void CreatePaymentMethod(IyzipayCreateRequest request)
     {
-        Options options = new Options();
-        options.ApiKey = "sandbox-mcu2voksqvqkczMgUnaWr6SaIqLjaCsa";
-        options.SecretKey = "sandbox-nynrsX0BMoSbzwZYUfoXi2SjEzyimwjk";
-        options.BaseUrl = "https://sandbox-api.iyzipay.com";
+        var iyzipayOptions = configuration.GetSection("IyzipayOptions").Get<IyzipayOptions>();
+        Options options = new Options
+        {
+            ApiKey = iyzipayOptions.ApiKey,
+            SecretKey = iyzipayOptions.SecretKey,
+            BaseUrl = iyzipayOptions.BaseUrl,
+        };
 
 
         request.Locale = Locale.TR.ToString();
@@ -26,7 +46,7 @@ public class CreatePaymentService
         request.MerchantCallbackUrl = "https://www.merchant.com/callback";
         request.MerchantErrorUrl = "https://www.merchant.com/error";
         request.MerchantNotificationUrl = "https://www.merchant.com/notification";
-        request.ApmType = ApmType.SOFORT.ToString();
+        request.ApmType = Models.Enums.ApmType.SOFORT.ToString();
 
         Buyer buyer = new Buyer();
         buyer.Id = "BY789";
@@ -89,11 +109,47 @@ public class CreatePaymentService
         basketItems.Add(thirdBasketItem);
         request.BasketItems = basketItems;
 
-        Models.Resource.Apm apmInitialize = Models.Resource.Apm.Create(request, options);
-        
+        Apm apmInitialize = Apm.Create(request, options);
+
+    }
+    public void CancelPaymentMethod(IyzipayCancelRequest request)
+    {
+        var iyzipayOptions = configuration.GetSection("IyzipayOptions").Get<IyzipayOptions>();
+        Options options = new Options
+        {
+            ApiKey = iyzipayOptions.ApiKey,
+            SecretKey = iyzipayOptions.SecretKey,
+            BaseUrl = iyzipayOptions.BaseUrl,
+        };
+
+        request.ConversationId = "123456789";
+        request.Locale = Locale.TR.ToString();
+        request.PaymentId = "1";
+        request.Ip = "85.34.78.112";
+
+        Cancel cancel = Cancel.Create(request, options);
 
 
     }
+    public void CancelPaymentMethod(IyzipayRefundRequest request)
+    {
+        var iyzipayOptions = configuration.GetSection("IyzipayOptions").Get<IyzipayOptions>();
+        Options options = new Options
+        {
+            ApiKey = iyzipayOptions.ApiKey,
+            SecretKey = iyzipayOptions.SecretKey,
+            BaseUrl = iyzipayOptions.BaseUrl,
+        };
 
+        request.ConversationId = "123456789";
+        request.Locale = Locale.TR.ToString();
+        request.PaymentTransactionId = "1";
+        request.Price = "0.5";
+        request.Ip = "85.34.78.112";
+        request.Currency = Currency.TRY.ToString();
+
+        Refund refund = Refund.Create(request, options);
+
+    }
 
 }

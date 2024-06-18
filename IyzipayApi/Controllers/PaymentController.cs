@@ -15,21 +15,21 @@ public class PaymentController : ControllerBase
         this.createPaymentService = createPaymentService;
     }
 
-    [HttpPost]
+    [HttpPost("CreatePaymentService")]
     public void CreatePaymentService(IyzipayCreateRequest iyzipayCreateRequest)
     {
         createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
     }
 
 
-    [HttpPost]
+    [HttpPost("CancelPaymentService")]
     public void CancelPaymentService(IyzipayCreateRequest iyzipayCreateRequest)
     {
         createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
     }
 
 
-    [HttpPost]
+    [HttpPost("RefundPaymentService")]
     public void RefundPaymentService(IyzipayCreateRequest iyzipayCreateRequest)
     {
         createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);

@@ -1,4 +1,5 @@
 ﻿using IyzipayApi.Models;
+using IyzipayApi.Models.Request;
 using IyzipayApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,37 +9,35 @@ namespace IyzipayApi.Controllers;
 [ApiController]
 public class CardRegisterController : ControllerBase
 {
-    private readonly CreatePaymentService createPaymentService;
+    private readonly CardStorageService cardStorageService;
 
-    public CardRegisterController(CreatePaymentService createPaymentService)
+    public CardRegisterController(CardStorageService cardStorageService)
     {
-        this.createPaymentService = createPaymentService;
+        this.cardStorageService = cardStorageService;
     }
 
-    [HttpPost]
-    public void CreateUserAndCardService(IyzipayCreateRequest iyzipayCreateRequest)
+    [HttpPost("CreateUserAndCardService")]
+    public void CreateUserAndCardService(CreateCardRequest iyzipayCreateRequest)
     {
-        createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
+        cardStorageService.CreateUserAndCardService(iyzipayCreateRequest);
     }
 
-    [HttpPost]
-    public void CreateCardService(IyzipayCreateRequest iyzipayCreateRequest)
+    [HttpPost("CreateCardService")]
+    public void CreateCardService(CreateCardRequest iyzipayCreateRequest)
     {
-        createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
+        cardStorageService.CreateCardService(iyzipayCreateRequest);
     }
 
-    [HttpDelete]
-    public void DeleteCardService(IyzipayCreateRequest iyzipayCreateRequest)
+    [HttpDelete("DeleteCardService")]
+    public void DeleteCardService(DeleteCardRequest iyzipayCreateRequest)
     {
-        createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
+        cardStorageService.DeleteCardService(iyzipayCreateRequest);
     }
 
-    [HttpPost]
-    public void RetrieveCardService(IyzipayCreateRequest iyzipayCreateRequest)
+    [HttpPost("RetrieveCardService")]
+    public void RetrieveCardService(RetrieveCardListRequest iyzipayCreateRequest)
     {
-        createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
+        cardStorageService.RetrieveCardService(iyzipayCreateRequest);
     }
-
-
 
 }
