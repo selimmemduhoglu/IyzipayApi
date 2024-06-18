@@ -6,34 +6,39 @@ namespace IyzipayApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PaymentController : ControllerBase
+public class CardRegisterController : ControllerBase
 {
     private readonly CreatePaymentService createPaymentService;
 
-    public PaymentController(CreatePaymentService createPaymentService)
+    public CardRegisterController(CreatePaymentService createPaymentService)
     {
         this.createPaymentService = createPaymentService;
     }
 
     [HttpPost]
-    public void CreatePaymentService(IyzipayCreateRequest iyzipayCreateRequest)
+    public void CreateUserAndCardService(IyzipayCreateRequest iyzipayCreateRequest)
     {
         createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
     }
-
 
     [HttpPost]
-    public void CancelPaymentService(IyzipayCreateRequest iyzipayCreateRequest)
+    public void CreateCardService(IyzipayCreateRequest iyzipayCreateRequest)
     {
         createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
     }
 
+    [HttpDelete]
+    public void DeleteCardService(IyzipayCreateRequest iyzipayCreateRequest)
+    {
+        createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
+    }
 
     [HttpPost]
-    public void RefundPaymentService(IyzipayCreateRequest iyzipayCreateRequest)
+    public void RetrieveCardService(IyzipayCreateRequest iyzipayCreateRequest)
     {
         createPaymentService.CreatePaymentMethod(iyzipayCreateRequest);
     }
+
 
 
 }

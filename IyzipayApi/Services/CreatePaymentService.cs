@@ -4,16 +4,22 @@ using IyzipayApi.Models.Enums;
 
 namespace IyzipayApi.Services;
 
-public class CreatePaymentService : Sample
+public class CreatePaymentService
 {
     public void CreatePaymentMethod(IyzipayCreateRequest request)
     {
+        Options options = new Options();
+        options.ApiKey = "sandbox-mcu2voksqvqkczMgUnaWr6SaIqLjaCsa";
+        options.SecretKey = "sandbox-nynrsX0BMoSbzwZYUfoXi2SjEzyimwjk";
+        options.BaseUrl = "https://sandbox-api.iyzipay.com";
+
+
         request.Locale = Locale.TR.ToString();
-        request.ConversationId = "123456789";
-        request.Price = "1";
-        request.PaidPrice = "1.2";
-        request.Currency = Currency.EUR.ToString();
-        request.CountryCode = "DE";
+        request.ConversationId = "321321321";
+        request.Price = "2";
+        request.PaidPrice = "1.5";
+        request.Currency = Currency.TRY.ToString();
+        request.CountryCode = "TR";
         request.PaymentChannel = PaymentChannel.WEB.ToString();
         request.PaymentGroup = PaymentGroup.PRODUCT.ToString();
         request.AccountHolderName = "success";
@@ -24,10 +30,10 @@ public class CreatePaymentService : Sample
 
         Buyer buyer = new Buyer();
         buyer.Id = "BY789";
-        buyer.Name = "John";
-        buyer.Surname = "Doe";
-        buyer.GsmNumber = "+905350000000";
-        buyer.Email = "email@email.com";
+        buyer.Name = "Selim";
+        buyer.Surname = "Memduhoglu";
+        buyer.GsmNumber = "+905445510873";
+        buyer.Email = "seli@gmail.com";
         buyer.IdentityNumber = "74300864791";
         buyer.LastLoginDate = "2015-10-05 12:43:35";
         buyer.RegistrationDate = "2013-04-21 15:12:09";
@@ -35,23 +41,23 @@ public class CreatePaymentService : Sample
         buyer.Ip = "85.34.78.112";
         buyer.City = "Istanbul";
         buyer.Country = "Turkey";
-        buyer.ZipCode = "34732";
+        buyer.ZipCode = "34771";
         request.Buyer = buyer;
 
         Address shippingAddress = new Address();
-        shippingAddress.ContactName = "Jane Doe";
+        shippingAddress.ContactName = "Selim Memduhoglu";
         shippingAddress.City = "Istanbul";
         shippingAddress.Country = "Turkey";
-        shippingAddress.Description = "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1";
-        shippingAddress.ZipCode = "34742";
+        shippingAddress.Description = "Ümraniye, Ihlamurkuyu Mah. Turnalı Sok. No:8";
+        shippingAddress.ZipCode = "34771";
         request.ShippingAddress = shippingAddress;
 
         Address billingAddress = new Address();
-        billingAddress.ContactName = "Jane Doe";
+        billingAddress.ContactName = "Selim Memduhoglu";
         billingAddress.City = "Istanbul";
         billingAddress.Country = "Turkey";
-        billingAddress.Description = "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1";
-        billingAddress.ZipCode = "34742";
+        billingAddress.Description = "Ümraniye, Ihlamurkuyu Mah. Turnalı Sok. No:8";
+        billingAddress.ZipCode = "34771";
         request.BillingAddress = billingAddress;
 
         List<BasketItem> basketItems = new List<BasketItem>();
@@ -61,7 +67,7 @@ public class CreatePaymentService : Sample
         firstBasketItem.Category1 = "Collectibles";
         firstBasketItem.Category2 = "Accessories";
         firstBasketItem.ItemType = BasketItemType.PHYSICAL.ToString();
-        firstBasketItem.Price = "0.3";
+        firstBasketItem.Price = "0.7";
         basketItems.Add(firstBasketItem);
 
         BasketItem secondBasketItem = new BasketItem();
@@ -79,11 +85,12 @@ public class CreatePaymentService : Sample
         thirdBasketItem.Category1 = "Electronics";
         thirdBasketItem.Category2 = "Usb / Cable";
         thirdBasketItem.ItemType = BasketItemType.PHYSICAL.ToString();
-        thirdBasketItem.Price = "0.2";
+        thirdBasketItem.Price = "0.8";
         basketItems.Add(thirdBasketItem);
         request.BasketItems = basketItems;
 
         Models.Resource.Apm apmInitialize = Models.Resource.Apm.Create(request, options);
+        
 
 
     }
