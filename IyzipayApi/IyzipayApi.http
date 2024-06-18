@@ -1,0 +1,6 @@
+@IyzipayApi_HostAddress = http://localhost:5008
+
+GET {{IyzipayApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
